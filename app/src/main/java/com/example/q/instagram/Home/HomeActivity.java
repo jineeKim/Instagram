@@ -32,7 +32,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         Log.d(TAG,"onCreate: starting.");
 
-        setupFirevaseAuth();
+        setupFirebaseAuth();
         setupBottomNavigationView();
         setupViewPager();
     }
@@ -80,7 +80,7 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    private void setupFirevaseAuth(){
+    private void setupFirebaseAuth(){
         Log.d(TAG, "setupFirebaseAuth: setting up firebase auth. ");
 
         mAuth = FirebaseAuth.getInstance();

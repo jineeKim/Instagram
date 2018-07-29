@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Instagram</string>
+
+    <!--Firebase messages -->
+    <string name = "auth_failed"> Fail to Authenticate</string>
+    <string name = "auth_success">Authentication Success</string>
 </resources>
