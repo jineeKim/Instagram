@@ -9,5 +9,5 @@
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:id="@+id/gridImageView"/>
-    
+
 </RelativeLayout>
