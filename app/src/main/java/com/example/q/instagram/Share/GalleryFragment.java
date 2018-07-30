@@ -1,5 +1,6 @@
 package com.example.q.instagram.Share;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -35,7 +36,6 @@ public class GalleryFragment extends Fragment{
 
     //constants
     private static final int NUM_GRID_COLUMNS = 3;
-    private static final int VERIFY_PERMISSIONS_REQUEST = 1;
 
     //widgets
     private GridView gridView;
@@ -47,6 +47,8 @@ public class GalleryFragment extends Fragment{
     private ArrayList<String> directories;
     private ArrayList<String> directoryNames;
     private String mAppend = "file:/";
+    private String mSelectedImage;
+
 
 
     @Nullable
@@ -61,23 +63,15 @@ public class GalleryFragment extends Fragment{
         Log.d(TAG,"onCreateView: started.");
 
 
-        ImageView shareClose = (ImageView) view.findViewById(R.id.ivCloseShare);
-        shareClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "onClick: closing the gallery fragment.");
-                getActivity().finish();
-            }
-        });
-
-
         TextView nextScreen = (TextView) view.findViewById(R.id.tvNext);
         nextScreen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: navigating to the final share screen.");
 
-
+                Intent intent = new Intent(getActivity(), NextActivity.class);
+                intent.putExtra(getString(R.string.selected_image), mSelectedImage);
+                startActivity(intent);
             }
         });
 
@@ -94,18 +88,18 @@ public class GalleryFragment extends Fragment{
             directories = FileSearch.getDirectoryPaths(filePaths.PICTURES);
         }
 
-        directoryNames = new ArrayList<>();
-        for(int i = 0; i < directories.size(); i++){
-
-            int index = directories.get(i).lastIndexOf("/");
-            String string = directories.get(i).substring(index);
-            directoryNames.add(string);
-        }
+//        directoryNames = new ArrayList<>();
+//        for(int i = 0; i < directories.size(); i++){
+//
+//            int index = directories.get(i).lastIndexOf("/");
+//            String string = directories.get(i).substring(index);
+//            directoryNames.add(string);
+//        }
 
         directories.add(filePaths.CAMERA);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_spinner_item, directoryNames);
+                android.R.layout.simple_spinner_item, directories);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         directorySpinner.setAdapter(adapter);
 
@@ -142,6 +136,8 @@ public class GalleryFragment extends Fragment{
 
         //set the first image to be displayed when the activity fragment view is inflated
         setImage(imgURLs.get(0), galleryImage, mAppend);
+        mSelectedImage = imgURLs.get(0);
+
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -149,6 +145,8 @@ public class GalleryFragment extends Fragment{
                 Log.d(TAG, "onItemClick: selected an image: " + imgURLs.get(position));
 
                 setImage(imgURLs.get(position), galleryImage, mAppend);
+                mSelectedImage = imgURLs.get(position);
+
             }
         });
 
@@ -185,4 +183,3 @@ public class GalleryFragment extends Fragment{
         });
     }
 }
-
