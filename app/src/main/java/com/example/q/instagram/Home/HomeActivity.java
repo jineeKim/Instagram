@@ -35,6 +35,8 @@ public class HomeActivity extends AppCompatActivity {
         setupFirebaseAuth();
         setupBottomNavigationView();
         setupViewPager();
+
+        mAuth.signOut();
     }
 
     private void setupViewPager(){
